@@ -43,8 +43,10 @@ function myTweets() {
     fs.appendFile("./log.txt", "User Command: node liri.js my-tweets\n\n", err => {
         if (err) throw err;
     });
+
+    // initialize twitter client
     var client = new twitter(twitterKeys);
-    var params = { screen_name: "_angrbrd", count: 20 };
+    var params = { screen_name: "shirleyramz", count: 20 };
 
     console.log("Tweeter Tweets");
 }
