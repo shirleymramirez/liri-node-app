@@ -5,19 +5,23 @@ var fs = require("fs");
 
 // code required to import the keys.js file and store it in a variable.
 // var spotify = new Spotify(keys.spotify);
-// var client = new Twitter(keys.twitter);
 
 // node  module imports needed to run the function
 var request = require("request");
 var keys = require("./keys.js");
-var twitterKeys = keys.twitterKeys;
-var twitter = require("twitter");
-// var spotify = require("spotify");
+var Twitter = require("twitter");
+var spotify = require("node-spotify-api");
+
+// code required to import the keys.js file and store it in a variable.
+var client = new Twitter(keys.twitter);
+
+// action argument from the user
 var liriArgument = process.argv[2];
-console.log(liriArgument);
 
 // switch-case statement will direct which function gets run
 switch (liriArgument) {
+
+    // calls myTweets function which uses twitter api key to get tweets
     case "my-tweets":
         myTweets();
         break;
@@ -40,15 +44,27 @@ switch (liriArgument) {
 }
 
 function myTweets() {
-    fs.appendFile("./log.txt", "User Command: node liri.js my-tweets\n\n", err => {
-        if (err) throw err;
+
+    // search parameters includes screen name and count up to 20 tweets
+    var params = { screen_name: 'shirleyramz', count: 20 };
+
+    // get up to 20 tweets when created in the terminal
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
+
+        if (!error) {
+
+            //  loop through tweets and append each tweet and creation date
+            for (var i = 0; i < tweets.length; i++) {
+
+                // add text to log.txt
+                fs.appendFile("./log.txt", "@shirleymramirez: " + tweets[i].text + "\r\n");
+                fs.appendFile("./log.txt", "Created At: " + tweets[i].created_at + "\r\n");
+                fs.appendFile("./log.txt", "---------------------------- " + i + " ----------------------------\r\n");
+            }
+        } else {
+            console.log("Error Tweets");
+        }
     });
-
-    // initialize twitter client
-    var client = new twitter(twitterKeys);
-    var params = { screen_name: "shirleyramz", count: 20 };
-
-    console.log("Tweeter Tweets");
 }
 
 function spotifyThisSong() {
