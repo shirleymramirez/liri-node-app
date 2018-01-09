@@ -10,7 +10,7 @@ var keys = require("./keys.js");
 
 // action argument from the user
 var liriArgument = process.argv[2];
-var inputSongOrMovie = process.argv[3];
+var inputSongOrMovieTitle = process.argv[3];
 
 // switch-case statement will direct which function gets run
 switch (liriArgument) {
@@ -67,18 +67,15 @@ function myTweets() {
 function spotifyThisSong() {
 
     // 
-    var Spotify = require("node-spotify-api");
-    var spotify = new Spotify(keys.spotify);
-    // 
-    var songName = inputSongOrMovie;
-    if (!songName) {
-        songName = "The Sign";
+    const Spotify = require("node-spotify-api");
+    const spotify = new Spotify(keys.spotify);
+
+    if (!inputSongOrMovieTitle) {
+        inputSongOrMovieTitle = "The Sign";
     }
 
-    var params = songName;
-
     // used spotify search to find album, artist or track 
-    spotify.search({ type: "track", query: params }, function(err, data) {
+    spotify.search({ type: "track", query: inputSongOrMovieTitle }, function(err, data) {
 
         if (!err) {
 
@@ -96,7 +93,7 @@ function spotifyThisSong() {
                 fs.appendFile("./log.txt", "Title of the song: " + songInfo[i].name + "\r\n");
                 fs.appendFile("./log.txt", "Preview Link: " + songInfo[i].preview_url + "\r\n");
                 fs.appendFile("./log.txt", "Album Name: " + songInfo[i].album.name + "\r\n");
-                fs.appendFile("./log.txt", "------------------------------------------" + "\r\n");
+                fs.appendFile("./log.txt", "---------------------------------------------------" + "\r\n");
             }
         } else {
             return console.log("Error occurred: " + err);
@@ -106,7 +103,27 @@ function spotifyThisSong() {
 
 function movieThis() {
 
-    console.log("Movie Results");
+    if (!inputSongOrMovieTitle) {
+        inputSongOrMovieTitle = "Mr. Nobody";
+    }
+    var queryUrl = "http://www.omdbapi.com/?t=" + inputSongOrMovieTitle + "&y=&plot=short&apikey=trilogy";
+
+    request(queryUrl, function(error, data, body) {
+        if (!error && data.statusCode === 200) {
+            console.log("Title of the movie: ", JSON.parse(body).Title);
+            console.log("Year Released: ", JSON.parse(body).Year);
+            console.log("IMDB Rating: ", JSON.parse(body).Ratings[0].Value);
+            console.log("Rotten Tomatoes Rating: ", JSON.parse(body).Ratings[1].Value);
+            console.log("Country where the movie was produced: ", JSON.parse(body).Country);
+            console.log("Language: ", JSON.parse(body).Language);
+            console.log("Plot: ", JSON.parse(body).Plot);
+            console.log("Actors: ", JSON.parse(body).Actors);
+            console.log("-------------------------------------------------");
+
+            // fs.appendFile("./log.txt", "Title of the movie: ", JSON.parse(body).Title);
+        }
+    });
+
 }
 
 function doWhatItSays() {
