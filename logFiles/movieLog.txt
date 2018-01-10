@@ -1,0 +1,18 @@
+Title of the movie: Wonder
+Year Release: 2017
+IMDB Rating: 8.1/10
+Rotten Tomatoes Rating: 85%
+Country where the movie was produced: USA, Hong Kong
+Language: English
+Plot: Based on the New York Times bestseller, WONDER tells the incredibly inspiring and heartwarming story of August Pullman, a boy with facial differences who enters fifth grade, attending a mainstream elementary school for the first time.
+Actors: Jacob Tremblay, Owen Wilson, Izabela Vidovic, Julia Roberts
+------------------------------------------------------------------
+Title of the movie: Sleepless in Seattle
+Year Release: 1993
+IMDB Rating: 6.8/10
+Rotten Tomatoes Rating: 72%
+Country where the movie was produced: USA
+Language: English
+Plot: A recently widowed man's son calls a radio talk-show in an attempt to find his father a partner.
+Actors: Tom Hanks, Ross Malinger, Rita Wilson, Victor Garber
+------------------------------------------------------------------

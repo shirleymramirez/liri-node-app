@@ -1,6 +1,9 @@
 // read and set any environment variables with the dotenv package
 require("dotenv").config();
 
+// this will enable user to use end of line with MacOS or Windows machine
+var os = require("os");
+
 // node module for file system
 var fs = require("fs");
 
@@ -11,6 +14,7 @@ var keys = require("./keys.js");
 // action argument from the user
 var liriArgument = process.argv[2];
 var inputSongOrMovieTitle = process.argv[3];
+var infoSeparator = "------------------------------------------------------------------";
 
 // switch-case statement will direct which function gets run
 switch (liriArgument) {
@@ -20,10 +24,12 @@ switch (liriArgument) {
         myTweets();
         break;
 
+        // calls spotifyThisSong function which uses spotify api key
     case "spotify-this-song":
         spotifyThisSong();
         break;
 
+        // calls movieThis function which used OMDB api key
     case "movie-this":
         movieThis();
         break;
@@ -39,91 +45,143 @@ switch (liriArgument) {
 
 function myTweets() {
 
-    // code required to import the twitter files and store it in a variable.
+    // code required to import twitter node modules files and store it in a variable.
     var Twitter = require("twitter");
     var twitterClient = new Twitter(keys.twitter);
 
     // search parameters includes screen name and count up to 20 tweets
     var params = { screen_name: 'shirleyramz', count: 20 };
 
-    // get method for 20 tweets when created in the terminal
     twitterClient.get('statuses/user_timeline', params, function(error, tweets, response) {
 
         if (!error) {
 
-            //  loop through tweets and append each tweet and creation date
-            for (var i = 0; i < tweets.length; i++) {
-                // add text to log.txt
-                fs.appendFile("./log.txt", "@shirleymramirez: " + tweets[i].text + "\r\n");
-                fs.appendFile("./log.txt", "Created At: " + tweets[i].created_at + "\r\n");
-                fs.appendFile("./log.txt", "---------------------------- " + i + " ----------------------------\r\n");
-            }
+            const tweeterStr = tweeterStringify(tweets);
+            console.log(tweeterStr);
+
+            // update tweeterLog.txt 
+            fs.appendFile("./logFiles/tweeterLog.txt", tweeterStr + os.EOL, function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
+
         } else {
             return console.log("Error Tweets");
         }
     });
 }
 
+function tweeterStringify(tweets) {
+    const tweetsInfo = [];
+
+    //  loop through tweets and append each tweet and creation date
+    for (var i = 0; i < tweets.length; i++) {
+
+        // add text to tweeterLog.txt
+        tweetsInfo.push("@shirleymramirez: " + tweets[i].text);
+        tweetsInfo.push("@Created At: " + tweets[i].created_at);
+        tweetsInfo.push(infoSeparator + (i + 1) + infoSeparator);
+    }
+
+    return tweetsInfo.join(os.EOL);
+}
+
 function spotifyThisSong() {
 
-    // 
+    // code required to get spotify modules and store in a variable
     const Spotify = require("node-spotify-api");
     const spotify = new Spotify(keys.spotify);
 
+    // if no input Song from user, default song title is "The Sign"
     if (!inputSongOrMovieTitle) {
         inputSongOrMovieTitle = "The Sign";
     }
 
-    // used spotify search to find album, artist or track 
-    spotify.search({ type: "track", query: inputSongOrMovieTitle }, function(err, data) {
+    // used spotify api search to find album, artist or track 
+    // set limit search to 1
+    spotify.search({ type: "track", query: inputSongOrMovieTitle, limit: 1 }, function(err, data) {
 
         if (!err) {
-
             //store information to a variable from spotify data
             var songInfo = data.tracks.items;
-            console.log("Title of the Song: ", songInfo[0].name);
-            console.log("Artists: ", songInfo[0].artists[0].name);
-            console.log("Preview link: ", songInfo[0].preview_url);
-            console.log("Album Name: ", songInfo[0].album.name);
-            console.log("------------------------------------");
+            const songStr = spotifyStringify(data.tracks.items);
+            console.log(songStr);
 
-            // loop through each spotify data and append it on log.txt
-            for (var i = 0; i < songInfo.length; i++) {
-                fs.appendFile("./log.txt", "Artists: " + songInfo[i].artists[i].name + "\r\n");
-                fs.appendFile("./log.txt", "Title of the song: " + songInfo[i].name + "\r\n");
-                fs.appendFile("./log.txt", "Preview Link: " + songInfo[i].preview_url + "\r\n");
-                fs.appendFile("./log.txt", "Album Name: " + songInfo[i].album.name + "\r\n");
-                fs.appendFile("./log.txt", "---------------------------------------------------" + "\r\n");
-            }
+            // update spotifyLog.txt
+            fs.appendFile("./logFiles/spotifyLog.txt", songStr + os.EOL, function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
         } else {
             return console.log("Error occurred: " + err);
         }
     });
 }
 
-function movieThis() {
+function spotifyStringify(songs) {
+    const songsInfo = [];
 
+    // loop through each spotify data and append it on spotifyLog.txt
+    for (var i = 0; i < songs.length; i++) {
+        songsInfo.push("Artists: " + songs[i].artists[0].name);
+        songsInfo.push("Title of the song: " + songs[i].name);
+        songsInfo.push("Preview Link: " + songs[i].preview_url);
+        songsInfo.push("Album Name: " + songs[i].album.name);
+        songsInfo.push(infoSeparator + (i + 1) + infoSeparator);
+    }
+    return songsInfo.join(os.EOL);
+}
+
+
+function movieThis() {
+    // if user doesn't input a movie title, default would be "Mr. Nobody"
     if (!inputSongOrMovieTitle) {
         inputSongOrMovieTitle = "Mr. Nobody";
     }
+    // omdb path using movie title and api key
     var queryUrl = "http://www.omdbapi.com/?t=" + inputSongOrMovieTitle + "&y=&plot=short&apikey=trilogy";
 
+    // request method using path and a callback function
     request(queryUrl, function(error, data, body) {
-        if (!error && data.statusCode === 200) {
-            console.log("Title of the movie: ", JSON.parse(body).Title);
-            console.log("Year Released: ", JSON.parse(body).Year);
-            console.log("IMDB Rating: ", JSON.parse(body).Ratings[0].Value);
-            console.log("Rotten Tomatoes Rating: ", JSON.parse(body).Ratings[1].Value);
-            console.log("Country where the movie was produced: ", JSON.parse(body).Country);
-            console.log("Language: ", JSON.parse(body).Language);
-            console.log("Plot: ", JSON.parse(body).Plot);
-            console.log("Actors: ", JSON.parse(body).Actors);
-            console.log("-------------------------------------------------");
 
-            // fs.appendFile("./log.txt", "Title of the movie: ", JSON.parse(body).Title);
+        if (!error && data.statusCode === 200) {
+            const movie = JSON.parse(body);
+
+            const movieStr = movieStringify(movie);
+            console.log(movieStr);
+
+            // update movieLog.txt
+            fs.appendFile("./logFiles/movieLog.txt", movieStr + os.EOL, function(err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
         }
     });
 
+}
+
+function movieStringify(movie) {
+    const movieInformation = [];
+
+    // used push() method to add new items for the movie info
+    movieInformation.push("Title of the movie: " + movie.Title);
+    movieInformation.push("Year Release: " + movie.Year);
+    if (movie.Ratings[0]) {
+        movieInformation.push("IMDB Rating: " + movie.Ratings[0].Value);
+    }
+    if (movie.Ratings[1]) {
+        movieInformation.push("Rotten Tomatoes Rating: " + movie.Ratings[1].Value);
+    }
+    movieInformation.push("Country where the movie was produced: " + movie.Country);
+    movieInformation.push("Language: " + movie.Language);
+    movieInformation.push("Plot: " + movie.Plot);
+    movieInformation.push("Actors: " + movie.Actors);
+    movieInformation.push(infoSeparator);
+
+    return movieInformation.join(os.EOL);
 }
 
 function doWhatItSays() {
