@@ -1,7 +1,7 @@
 // read and set any environment variables with the dotenv package
 require("dotenv").config();
 
-// this will enable user to use end of line with MacOS or Windows machine
+// this will enable user to use end of line break both with MacOS or Windows machine
 var os = require("os");
 
 // node module for file system
@@ -11,37 +11,41 @@ var fs = require("fs");
 var request = require("request");
 var keys = require("./keys.js");
 
-// action argument from the user
-var liriArgument = process.argv[2];
+// input argument from the user
+var userInput = process.argv[2];
 var inputSongOrMovieTitle = process.argv[3];
 var infoSeparator = "------------------------------------------------------------------";
 
-// switch-case statement will direct which function gets run
-switch (liriArgument) {
+switchArgument(userInput);
 
-    // calls myTweets function which uses twitter api key to get tweets
-    case "my-tweets":
-        myTweets();
-        break;
+function switchArgument(userInput) {
+    // switch-case statement will direct which function gets run
+    switch (userInput) {
+        // calls myTweets function which uses twitter api key to get tweets
+        case "my-tweets":
+            myTweets();
+            break;
 
-        // calls spotifyThisSong function which uses spotify api key
-    case "spotify-this-song":
-        spotifyThisSong();
-        break;
+            // calls spotifyThisSong function which uses spotify api key
+        case "spotify-this-song":
+            spotifyThisSong();
+            break;
 
-        // calls movieThis function which used OMDB api key
-    case "movie-this":
-        movieThis();
-        break;
+            // calls movieThis function which used OMDB api key
+        case "movie-this":
+            movieThis();
+            break;
 
-    case "do-what-it-says":
-        doWhatItSays();
-        break;
+            // this case will read random.txt file and do what is written in the tt files
+        case "do-what-it-says":
+            doWhatItSays();
+            break;
 
-    default:
-        console.log("error");
-        break;
-}
+        default:
+            console.log("error");
+            break;
+    }
+};
 
 function myTweets() {
 
@@ -84,6 +88,7 @@ function tweeterStringify(tweets) {
         tweetsInfo.push(infoSeparator + (i + 1) + infoSeparator);
     }
 
+    // this will drop each line of text to the next line
     return tweetsInfo.join(os.EOL);
 }
 
@@ -123,7 +128,7 @@ function spotifyThisSong() {
 function spotifyStringify(songs) {
     const songsInfo = [];
 
-    // loop through each spotify data and append it on spotifyLog.txt
+    // loop through each spotify data and append it on spotifyLog.txt using push() method
     for (var i = 0; i < songs.length; i++) {
         songsInfo.push("Artists: " + songs[i].artists[0].name);
         songsInfo.push("Title of the song: " + songs[i].name);
@@ -131,6 +136,8 @@ function spotifyStringify(songs) {
         songsInfo.push("Album Name: " + songs[i].album.name);
         songsInfo.push(infoSeparator + (i + 1) + infoSeparator);
     }
+
+    // this will drop each line of text to the next line
     return songsInfo.join(os.EOL);
 }
 
@@ -147,8 +154,10 @@ function movieThis() {
     request(queryUrl, function(error, data, body) {
 
         if (!error && data.statusCode === 200) {
-            const movie = JSON.parse(body);
 
+            // assigned all the data(body) to a const movie which will be used 
+            // in a function for getting all the information we needed to log in our text file
+            const movie = JSON.parse(body);
             const movieStr = movieStringify(movie);
             console.log(movieStr);
 
@@ -160,12 +169,12 @@ function movieThis() {
             });
         }
     });
-
 }
 
 function movieStringify(movie) {
     const movieInformation = [];
 
+    // get all the data needed to be pushed to our text file
     // used push() method to add new items for the movie info
     movieInformation.push("Title of the movie: " + movie.Title);
     movieInformation.push("Year Release: " + movie.Year);
@@ -181,9 +190,27 @@ function movieStringify(movie) {
     movieInformation.push("Actors: " + movie.Actors);
     movieInformation.push(infoSeparator);
 
+    // this will drop each line of text to the next line
     return movieInformation.join(os.EOL);
 }
 
+// read data from random.tx files and do what it says on that file
 function doWhatItSays() {
-    console.log("Do it!");
+    fs.readFile("./logFiles/random.txt", "utf8", function(error, data) {
+        if (error) {
+            console.log("It says: ERROR!");
+        } else {
+            // split text string from random.txt to get the user input command
+            var randomTxtData = data.split(",");
+
+            // assigned first index data to userInput 
+            userInput = randomTxtData[0];
+
+            // assigned 2nd index data to inputSongOrMovieTitle 
+            inputSongOrMovieTitle = randomTxtData[1];
+
+            // calls switchArgument function 
+            switchArgument(userInput);
+        }
+    });
 }
