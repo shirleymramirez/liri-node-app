@@ -52,3 +52,12 @@ Language: English, Spanish
 Plot: During a preview tour, a theme park suffers a major power breakdown that allows its cloned dinosaur exhibits to run amok.
 Actors: Sam Neill, Laura Dern, Jeff Goldblum, Richard Attenborough
 ------------------------------------------------------------------
+Title of the movie: Jurassic Park
+Year Release: 1993
+IMDB Rating: 8.1/10
+Rotten Tomatoes Rating: 92%
+Country where the movie was produced: USA
+Language: English, Spanish
+Plot: During a preview tour, a theme park suffers a major power breakdown that allows its cloned dinosaur exhibits to run amok.
+Actors: Sam Neill, Laura Dern, Jeff Goldblum, Richard Attenborough
+------------------------------------------------------------------
