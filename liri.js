@@ -56,7 +56,7 @@ function myTweets() {
     // search parameters includes screen name and count up to 20 tweets
     var params = { screen_name: 'shirleyramz', count: 20 };
 
-    twitterClient.get('statuses/user_timeline', params, function(error, tweets, response) {
+    twitterClient.get('statuses/user_timeline', params, function(error, tweets) {
 
         if (!error) {
 
@@ -109,7 +109,6 @@ function spotifyThisSong() {
 
         if (!err) {
             //store information to a variable from spotify data
-            var songInfo = data.tracks.items;
             const songStr = spotifyStringify(data.tracks.items);
             console.log(songStr);
 
@@ -194,7 +193,7 @@ function movieStringify(movie) {
     return movieInformation.join(os.EOL);
 }
 
-// read data from random.tx files and do what it says on that file
+// read data from random.txt files and do what it says on that file
 function doWhatItSays() {
     fs.readFile("./logFiles/random.txt", "utf8", function(error, data) {
         if (error) {
