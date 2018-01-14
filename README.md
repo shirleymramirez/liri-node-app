@@ -28,25 +28,26 @@
     ![screen shot 2018-01-14 at 1 34 44 pm](https://user-images.githubusercontent.com/31137669/34921600-087cfe2a-f942-11e7-94b9-631f01a00799.png)
 
 
-2.  Node liri.js spotify-this-song ‘<song name here>’
+2.  Node liri.js spotify-this-song ‘ <song name here> ’
         
-    Example output for spotify (text files) 
-    
-    ![spotifyLog](https://week10-nodejs/images/spotifyLogtxt.png)
+    Example output for spotify in the terminal
+    ![screen shot 2018-01-14 at 1 46 42 pm](https://user-images.githubusercontent.com/31137669/34921661-ca9a85fe-f942-11e7-8370-840e4d8c043a.png)
 
-    Shows the following information about the song in the terminal
+    Shows the following information about the song in the logFiles.txt
+    ![screen shot 2018-01-14 at 1 45 19 pm](https://user-images.githubusercontent.com/31137669/34921657-c4dfbe2c-f942-11e7-92f6-32c06c4d0c90.png)
+    
 
       * artist(s)
       * Title of the song 
       * preview link of the song from spotify
       * album that the song is a part of
       * Example output in the terminal
-	
-     Example for movie
 
 3. node liri.js movie-this '<movie name here>'
+	
+	Example for ombd movie output in the logFiles.txt
+	![screen shot 2018-01-14 at 1 52 42 pm](https://user-images.githubusercontent.com/31137669/34921664-d1ccbd7e-f942-11e7-8831-565c2629f20f.png)
 
-   This would output the following information to the terminal:
 
     * Title of the movie.
     * Year the movie came out.
@@ -58,11 +59,13 @@
     * Actors in the movie.
 
     Example output in the terminal
-	
-    Example for do what it says
+	![screen shot 2018-01-14 at 1 53 26 pm](https://user-images.githubusercontent.com/31137669/34921670-da680f06-f942-11e7-9698-aaf79c136725.png)
 
 4. node liri.js do-what-it-says
 	
+	Example for do what-it-says output in the terminal
+	![screen shot 2018-01-14 at 2 00 58 pm](https://user-images.githubusercontent.com/31137669/34921677-e3750630-f942-11e7-9386-139668bfd1d8.png)
+
 **Instruction When Cloning the app from github**
 
 1. Before you start you will be needing the following  npm packages to run the app
