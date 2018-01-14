@@ -1,4 +1,4 @@
-Week 10 homework assignment:
+***Liri App***
 
 **Introduction**
 
@@ -25,6 +25,8 @@ Week 10 homework assignment:
     Example for tweeter using console.log(terminal)
 
     Example for twitter output (text files)
+    ![screen shot 2018-01-14 at 1 34 44 pm](https://user-images.githubusercontent.com/31137669/34921600-087cfe2a-f942-11e7-94b9-631f01a00799.png)
+
 
 2.  Node liri.js spotify-this-song ‘<song name here>’
         
