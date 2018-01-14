@@ -23,12 +23,14 @@
 1. node liri.js my-tweets
 
     Example for tweeter using console.log(terminal)
+![screen shot 2018-01-14 at 1 34 53 pm](https://user-images.githubusercontent.com/31137669/34921847-9b1f2fa8-f944-11e7-809c-4cd91e1dd465.png)
+
 
     Example for twitter output (text files)
     ![screen shot 2018-01-14 at 1 34 44 pm](https://user-images.githubusercontent.com/31137669/34921600-087cfe2a-f942-11e7-94b9-631f01a00799.png)
 
 
-2.  Node liri.js spotify-this-song ‘ <song name here> ’
+2.  Node liri.js spotify-this-song ‘ song name here ’
         
     Example output for spotify in the terminal
     ![screen shot 2018-01-14 at 1 46 42 pm](https://user-images.githubusercontent.com/31137669/34921661-ca9a85fe-f942-11e7-8370-840e4d8c043a.png)
@@ -36,27 +38,27 @@
     Shows the following information about the song in the logFiles.txt
     ![screen shot 2018-01-14 at 1 45 19 pm](https://user-images.githubusercontent.com/31137669/34921657-c4dfbe2c-f942-11e7-92f6-32c06c4d0c90.png)
     
+		Data List from Spotify :
+		      * Artist(s)
+		      * Title of the song 
+		      * preview link of the song from spotify
+		      * album that the song is a part of
+		      * Example output in the terminal
 
-      * artist(s)
-      * Title of the song 
-      * preview link of the song from spotify
-      * album that the song is a part of
-      * Example output in the terminal
-
-3. node liri.js movie-this '<movie name here>'
+3. node liri.js movie-this 'movie name here'
 	
 	Example for ombd movie output in the logFiles.txt
 	![screen shot 2018-01-14 at 1 52 42 pm](https://user-images.githubusercontent.com/31137669/34921664-d1ccbd7e-f942-11e7-8831-565c2629f20f.png)
 
-
-    * Title of the movie.
-    * Year the movie came out.
-    * IMDB Rating of the movie.
-    * Rotten Tomatoes Rating of the movie.
-    * Country where the movie was produced.
-    * Language of the movie.
-    * Plot of the movie.
-    * Actors in the movie.
+		Data List from OMDB 
+		    * Title of the movie.
+		    * Year the movie came out.
+		    * IMDB Rating of the movie.
+		    * Rotten Tomatoes Rating of the movie.
+		    * Country where the movie was produced.
+		    * Language of the movie.
+		    * Plot of the movie.
+		    * Actors in the movie.
 
     Example output in the terminal
 	![screen shot 2018-01-14 at 1 53 26 pm](https://user-images.githubusercontent.com/31137669/34921670-da680f06-f942-11e7-9698-aaf79c136725.png)
