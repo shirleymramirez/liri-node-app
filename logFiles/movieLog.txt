@@ -70,3 +70,12 @@ Language: English
 Plot: After Ferdinand, a bull with a big heart, is mistaken for a dangerous beast, he is captured and torn from his home. Determined to return to his family, he rallies a misfit team on the ultimate adventure.
 Actors: Jack Gore, Jet Jurgensmeyer, Nile Diaz, Colin H. Murphy
 ------------------------------------------------------------------
+Title of the movie: Titanic
+Year Release: 1997
+IMDB Rating: 7.8/10
+Rotten Tomatoes Rating: 88%
+Country where the movie was produced: USA
+Language: English, Swedish
+Plot: A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.
+Actors: Leonardo DiCaprio, Kate Winslet, Billy Zane, Kathy Bates
+------------------------------------------------------------------

@@ -4,7 +4,7 @@ require("dotenv").config();
 // this will enable user to use end of line break both with MacOS or Windows machine
 var os = require("os");
 
-// node module for file system
+// node module for file system  
 var fs = require("fs");
 
 // node  module imports needed to run the function
@@ -16,9 +16,9 @@ var userInput = process.argv[2];
 var inputSongOrMovieTitle = process.argv[3];
 var infoSeparator = "------------------------------------------------------------------";
 
-switchArgument(userInput);
+inputCommand(userInput);
 
-function switchArgument(userInput) {
+function inputCommand(userInput) {
     // switch-case statement will direct which function gets run
     switch (userInput) {
         // calls myTweets function which uses twitter api key to get tweets
@@ -42,7 +42,9 @@ function switchArgument(userInput) {
             break;
 
         default:
-            console.log("error");
+            console.log(
+                "Please input a valid user arguments. See README.md for instructions"
+            );
             break;
     }
 };
@@ -100,7 +102,7 @@ function spotifyThisSong() {
 
     // if no input Song from user, default song title is "The Sign"
     if (!inputSongOrMovieTitle) {
-        inputSongOrMovieTitle = "The Sign";
+        inputSongOrMovieTitle = 'The Sign';
     }
 
     // used spotify api search to find album, artist or track 
@@ -108,16 +110,22 @@ function spotifyThisSong() {
     spotify.search({ type: "track", query: inputSongOrMovieTitle, limit: 1 }, function(err, data) {
 
         if (!err) {
+            var songInfo = data.tracks.items;
+
             //store information to a variable from spotify data
             const songStr = spotifyStringify(data.tracks.items);
             console.log(songStr);
 
             // update spotifyLog.txt
-            fs.appendFile("./logFiles/spotifyLog.txt", songStr + os.EOL, function(err) {
-                if (err) {
-                    return console.log(err);
+            fs.appendFile(
+                "./logFiles/spotifyLog.txt",
+                songStr + os.EOL,
+                function(err) {
+                    if (err) {
+                        return console.log(err);
+                    }
                 }
-            });
+            );
         } else {
             return console.log("Error occurred: " + err);
         }
@@ -205,11 +213,19 @@ function doWhatItSays() {
             // assigned first index data to userInput 
             userInput = randomTxtData[0];
 
-            // assigned 2nd index data to inputSongOrMovieTitle 
-            inputSongOrMovieTitle = randomTxtData[1];
+            // input data error/validation check for random.txt files
+            if (userInput === "my-tweets" || userInput === "spotify-this-song" || userInput === "movie-this" || userInput === "do-what-it-says") {
 
-            // calls switchArgument function 
-            switchArgument(userInput);
+                // assigned 2nd index data to inputSongOrMovieTitle 
+                inputSongOrMovieTitle = randomTxtData[1];
+
+                // calls inputCommand function 
+                inputCommand(userInput);
+
+            } else {
+                console.log("Please input the correct argument, see README.md");
+            }
+
         }
     });
-}
+};
