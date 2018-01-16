@@ -102,30 +102,23 @@ function spotifyThisSong() {
 
     // if no input Song from user, default song title is "The Sign"
     if (!inputSongOrMovieTitle) {
-        inputSongOrMovieTitle = 'The Sign';
+        inputSongOrMovieTitle = "The Sign Ace of Base";
     }
 
     // used spotify api search to find album, artist or track 
     // set limit search to 1
     spotify.search({ type: "track", query: inputSongOrMovieTitle, limit: 1 }, function(err, data) {
-
         if (!err) {
-            var songInfo = data.tracks.items;
-
             //store information to a variable from spotify data
             const songStr = spotifyStringify(data.tracks.items);
             console.log(songStr);
 
             // update spotifyLog.txt
-            fs.appendFile(
-                "./logFiles/spotifyLog.txt",
-                songStr + os.EOL,
-                function(err) {
-                    if (err) {
-                        return console.log(err);
-                    }
+            fs.appendFile("./logFiles/spotifyLog.txt", songStr + os.EOL, function(err) {
+                if (err) {
+                    return console.log(err);
                 }
-            );
+            });
         } else {
             return console.log("Error occurred: " + err);
         }
